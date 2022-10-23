@@ -2,38 +2,72 @@
   <h1>CREATE A NEW PORTFOLIO!</h1>
 </div>
 
-<div class="table flex" *ngIf="!searchData.isEmpty">
-  <table border="1">
-    <tr>
-      <th>L O G O 1</th>
-      <th>C r y p t o 1</th>
-      <th>Number Tokens</th>
-      <th>L O G O 2</th>
-      <th>C r y p t o 2</th>
-      <th>Hopium Multiply</th>
-      <th>Hopium Price</th>
-      <th>Hopium Gains</th>
-    </tr>
-    <tr *ngIf="searchData.portfolioRow.length === 0">
-      <td colspan="8">ADD NEW TOKENS FOR HOPIUM!</td>
-    </tr>
-    <tr *ngIf="!(searchData.portfolioRow.length === 0)">
-      <td><img src="{{ searchData.portfolioRow[0].image }}" alt="" /></td>
-      <td>{{ searchData.portfolioRow[0].symbol.toUpperCase() }}</td>
-      <td>
-        <input
-          [(ngModel)]="tokenAmount"
-          type="number"
-          placeholder="number of tokens"
-        />
-      </td>
-      <td><img src="{{ searchData.portfolioRow[1].image }}" alt="" /></td>
-      <td>{{ searchData.portfolioRow[1].symbol.toUpperCase() }}</td>
-      <td>{{ searchData.hopiumMultiply }} X</td>
-      <td>${{ searchData.hopiumPrice }}</td>
-      <td>${{ hopiumGains }}</td>
-      <button (click)="delete()">X</button>
-    </tr>
-  </table>
-  {{ tokenAmount | json }}
+<div class="example-container mat-elevation-z8" *ngIf="!searchData.isEmpty">
+  <mat-table #table [dataSource]="searchData.dataSource">
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Logo 1 Column -->
+    <ng-container matColumnDef="logoFirst">
+      <mat-header-cell *matHeaderCellDef> Logo 1 </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <img src="{{ element.logoFirst }}" alt="" />
+      </mat-cell>
+    </ng-container>
+
+    <!-- First Crypto Column -->
+    <ng-container matColumnDef="cryptoFirst">
+      <mat-header-cell *matHeaderCellDef> Crypto 1 </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.cryptoFirst.toUpperCase() }}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Logo 2 Column -->
+    <ng-container matColumnDef="logoSecond">
+      <mat-header-cell *matHeaderCellDef> Logo 2 </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <img src="{{ element.logoSecond }}" alt="" />
+      </mat-cell>
+    </ng-container>
+
+    <!-- Second Crypto Column -->
+    <ng-container matColumnDef="cryptoSecond">
+      <mat-header-cell *matHeaderCellDef> Crypto 2 </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        {{ element.cryptoSecond.toUpperCase() }}
+      </mat-cell>
+    </ng-container>
+
+    <!-- Multiply Column -->
+    <ng-container matColumnDef="multiply">
+      <mat-header-cell *matHeaderCellDef> Hopiumply </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.multiply }} </mat-cell>
+    </ng-container>
+
+    <!-- Price Column -->
+    <ng-container matColumnDef="price">
+      <mat-header-cell *matHeaderCellDef> Precium </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.price }} </mat-cell>
+    </ng-container>
+
+    <!-- Gains Column -->
+    <ng-container matColumnDef="gain">
+      <mat-header-cell *matHeaderCellDef> Hopiums </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.gain }} </mat-cell>
+    </ng-container>
+
+    <!-- Delete Button -->
+    <ng-container matColumnDef="delete">
+      <mat-header-cell *matHeaderCellDef> Hopiums </mat-header-cell>
+      <mat-cell><button (click)="searchData.delete()">X</button></mat-cell>
+    </ng-container>
+
+    <mat-header-row
+      *matHeaderRowDef="searchData.displayedColumns"
+    ></mat-header-row>
+    <mat-row
+      *matRowDef="let row; columns: searchData.displayedColumns"
+    ></mat-row>
+  </mat-table>
 </div>

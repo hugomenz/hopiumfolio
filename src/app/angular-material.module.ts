@@ -6,6 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatTableModule } from '@angular/material/table';
 
 const materialModules = [
   MatAutocompleteModule,
@@ -15,6 +16,7 @@ const materialModules = [
   FormsModule,
   MatButtonModule,
   MatIconModule,
+  MatTableModule,
 ];
 @NgModule({
   imports: [CommonModule, ...materialModules],
