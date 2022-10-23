@@ -1,3 +1,5 @@
+@import "/src/assets/scss/variables";
+
 .homepage {
   flex-direction: column;
   justify-content: center;
@@ -6,4 +8,9 @@
 
 .swap-mc {
   padding: 2rem;
+}
+
+.crypto-search .mat-input-element {
+  color: white;
+  /* add input text color here */
 }

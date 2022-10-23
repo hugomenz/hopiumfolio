@@ -1,1 +1,39 @@
-<p>table works!</p>
+<div class="table flex" *ngIf="searchData.isEmpty">
+  <h1>CREATE A NEW PORTFOLIO!</h1>
+</div>
+
+<div class="table flex" *ngIf="!searchData.isEmpty">
+  <table border="1">
+    <tr>
+      <th>L O G O 1</th>
+      <th>C r y p t o 1</th>
+      <th>Number Tokens</th>
+      <th>L O G O 2</th>
+      <th>C r y p t o 2</th>
+      <th>Hopium Multiply</th>
+      <th>Hopium Price</th>
+      <th>Hopium Gains</th>
+    </tr>
+    <tr *ngIf="searchData.portfolioRow.length === 0">
+      <td colspan="8">ADD NEW TOKENS FOR HOPIUM!</td>
+    </tr>
+    <tr *ngIf="!(searchData.portfolioRow.length === 0)">
+      <td><img src="{{ searchData.portfolioRow[0].image }}" alt="" /></td>
+      <td>{{ searchData.portfolioRow[0].symbol.toUpperCase() }}</td>
+      <td>
+        <input
+          [(ngModel)]="tokenAmount"
+          type="number"
+          placeholder="number of tokens"
+        />
+      </td>
+      <td><img src="{{ searchData.portfolioRow[1].image }}" alt="" /></td>
+      <td>{{ searchData.portfolioRow[1].symbol.toUpperCase() }}</td>
+      <td>{{ searchData.hopiumMultiply }} X</td>
+      <td>${{ searchData.hopiumPrice }}</td>
+      <td>${{ hopiumGains }}</td>
+      <button (click)="delete()">X</button>
+    </tr>
+  </table>
+  {{ tokenAmount | json }}
+</div>
