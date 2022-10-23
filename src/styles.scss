@@ -1,7 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
+
 .flex {
-  display: flex;
+    display: flex;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.search {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    background-color: rgb(23, 24, 22);
+    align-items: center;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
+}
+
+.example-form {
+    margin: 1rem;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
