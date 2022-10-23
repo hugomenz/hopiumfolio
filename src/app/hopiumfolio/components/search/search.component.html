@@ -1,10 +1,28 @@
-<div class="homepage flex">
-  <div class="swap-mc flex">
-    <div class="crypto-container"><input type="text" /></div>
-    <div class="swap-arrows">
-      <div>-></div>
-    </div>
-    <div class="crypto-container"><input type="text" /></div>
-    <button (click)="newRow()">+</button>
-  </div>
+<div class="search">
+    <form class="example-form">
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Selected Coin</mat-label>
+            <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="coinSelected" [matAutocomplete]="auto" (ngModel)="firstCoin">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayWith">
+                <mat-option *ngFor="let option of filteredCoins " [value]="option">
+                    {{option.name}} - Rank: {{option.market_cap_rank}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </form>
+    <mat-icon color="primary">arrow_forward</mat-icon>
+    <form class="example-form">
+        <mat-form-field class="example-full-width" appearance="fill">
+            <mat-label>Selected MC Coin</mat-label>
+            <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="coinSelected" [matAutocomplete]="auto" (ngModel)="secondCoin">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayWith">
+                <mat-option *ngFor="let option of filteredCoins " [value]="option">
+                    {{option.name}}
+                </mat-option>
+            </mat-autocomplete>
+        </mat-form-field>
+    </form>
+    <button mat-icon-button color="primary" aria-label="Example icon button with a menu icon">
+      <mat-icon>library_add</mat-icon>
+    </button>
 </div>
