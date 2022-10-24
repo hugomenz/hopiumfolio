@@ -10,8 +10,8 @@
         matInput
         [formControl]="coinSelected"
         [matAutocomplete]="auto"
-        (ngModel)="(firstCoin)"
         color="warning"
+        [(ngModel)]="firstCoin"
       />
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayWith">
         <mat-option *ngFor="let option of filteredCoins" [value]="option">
@@ -31,7 +31,7 @@
         matInput
         [formControl]="coinSelected"
         [matAutocomplete]="auto"
-        (ngModel)="(secondCoin)"
+        [(ngModel)]="secondCoin"
       />
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayWith">
         <mat-option *ngFor="let option of filteredCoins" [value]="option">
