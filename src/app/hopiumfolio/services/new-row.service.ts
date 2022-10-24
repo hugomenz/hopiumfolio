@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { dataFromSearch } from '../api/example.search-data';
+import { Exchange } from 'src/app/interfaces/searchResponse.interface';
 import {
   CoinPortfolio,
   RowInfo,
 } from 'src/app/interfaces/coin-portfolio.interface';
+import { CoinFullData } from 'src/app/interfaces/coin.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,7 @@ export class NewRowService {
   ];
 
   dataSource!: any;
-  cryptoInfoList!: CoinPortfolio[];
+  cryptoInfoList!: CoinFullData[];
   isEmpty: boolean = true;
   hopiumMultiply!: number;
   hopiumPrice!: number;
@@ -31,12 +32,12 @@ export class NewRowService {
 
   // carga datos mokeados desde hopiumfolio/api
 
-  newRow(dataFromSearch: CoinPortfolio[]): void {
-    this.cryptoInfoList = dataFromSearch;
+  newRow(dataFromSearch: CoinFullData[]): void {
+    this.cryptoInfoList = dataFromSearch.flat();
     this.isEmpty = false;
     this.tableRowList.push(this.createRowInfo());
     this.dataSource = new MatTableDataSource<RowInfo>(this.tableRowList);
-    console.log(this.dataSource);
+    console.log(this.tableRowList);
   }
 
   getHopiumMultiplier() {
