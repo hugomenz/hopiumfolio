@@ -1,9 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  Exchange,
-  SearchResponse,
-} from 'src/app/interfaces/searchResponse.interface';
+import { SearchResponse } from 'src/app/interfaces/searchResponse.interface';
 import { CoinFullData } from '../../interfaces/coin.interface';
 
 @Injectable({

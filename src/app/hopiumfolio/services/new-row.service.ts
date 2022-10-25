@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Exchange } from 'src/app/interfaces/searchResponse.interface';
-import {
-  CoinPortfolio,
-  RowInfo,
-} from 'src/app/interfaces/coin-portfolio.interface';
+import { RowInfo } from 'src/app/interfaces/coin-portfolio.interface';
 import { CoinFullData } from 'src/app/interfaces/coin.interface';
 
 @Injectable({
@@ -20,23 +17,23 @@ export class NewRowService {
     'price',
     'gain',
   ];
-
-  dataSource!: any;
-  cryptoInfoList!: CoinFullData[];
-  isEmpty: boolean = true;
-  hopiumMultiply!: number;
-  hopiumPrice!: number;
+  tableDataSource!: any;
   tableRowList: RowInfo[] = [];
 
-  constructor() {}
+  cryptoInfoList!: CoinFullData[];
 
-  // carga datos mokeados desde hopiumfolio/api
+  isEmpty: boolean = true;
+
+  hopiumMultiply!: number;
+  hopiumPrice!: number;
+
+  constructor() {}
 
   newRow(dataFromSearch: CoinFullData[]): void {
     this.cryptoInfoList = dataFromSearch.flat();
     this.isEmpty = false;
     this.tableRowList.push(this.createRowInfo());
-    this.dataSource = new MatTableDataSource<RowInfo>(this.tableRowList);
+    this.tableDataSource = new MatTableDataSource<RowInfo>(this.tableRowList);
     console.log(this.tableRowList);
   }
 

@@ -11,17 +11,11 @@ import {
   switchMap,
   tap,
 } from 'rxjs/operators';
-import { CoinPortfolio } from 'src/app/interfaces/coin-portfolio.interface';
 import { CoinFullData } from 'src/app/interfaces/coin.interface';
-import {
-  Exchange,
-  SearchResponse,
-} from 'src/app/interfaces/searchResponse.interface';
+import { SearchResponse } from 'src/app/interfaces/searchResponse.interface';
 import { Coin } from '../../../interfaces/searchResponse.interface';
 import { ApiCoingeckoService } from '../../services/api-coingecko.service';
 import { NewRowService } from '../../services/new-row.service';
-
-//import { dataFromSearch } from '../../api/example.search-data';
 
 @Component({
   selector: 'app-search',
@@ -35,8 +29,6 @@ export class SearchComponent implements OnInit {
 
   selectedFirstCryptoData!: CoinFullData;
   selectedSecondCryptoData!: CoinFullData;
-
-  lista: CoinFullData[] = [];
 
   constructor(
     private coinGecko: ApiCoingeckoService,
@@ -69,8 +61,6 @@ export class SearchComponent implements OnInit {
   }
 
   newRow() {
-    //console.log(this.firstCoin.id);
-    //console.log(this.secondCoin.id);
     this.coinGecko.getCoinData(this.firstCoin.id).subscribe((data) => {
       this.selectedFirstCryptoData = data;
     });
@@ -80,14 +70,10 @@ export class SearchComponent implements OnInit {
     });
 
     setTimeout(() => {
-      console.log(typeof this.selectedSecondCryptoData);
-
       this.searchData.newRow([
         this.selectedFirstCryptoData,
         this.selectedSecondCryptoData,
       ]);
     }, 400);
-
-    //; // lista con los DOS obejtos de los inputs
   }
 }
