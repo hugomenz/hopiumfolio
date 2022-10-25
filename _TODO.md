@@ -65,4 +65,4 @@ Parecido al servicio _currency-selected_ En este caso, el usuario puede elegir e
 
 ### ADD Coingecko al Footer
 
-<a href="https://www.coingecko.com" target="_blank" rel="noreferrer nofollow"><div class="coingecko-wrapper"><span>Data powered by</span><img src="https://www.marketcapof.com/prefetch/coingecko.svg" alt="coingecko" width="88" height="23"></div></a>
+<a href="https://www.coingecko.com" target="_blank" rel="noreferrer nofollow"><div class="coingecko-wrapper"><span>Hopium given by</span><img src="https://www.marketcapof.com/prefetch/coingecko.svg" alt="coingecko" width="88" height="23"></div></a>
