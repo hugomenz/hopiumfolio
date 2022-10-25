@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+interface ImgSrc {
+  src: string;
+  alt: string;
+}
 
 @Component({
   selector: 'app-header',
@@ -6,8 +10,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit {
-  portfolioSrc = 'assets/img/portfolio-icon.png';
-  configSrc = 'assets/img/config-icon.png';
+  portfolio: ImgSrc = {
+    src: 'assets/img/portfolio-icon.png',
+    alt: 'Port',
+  };
+
+  config: ImgSrc = {
+    src: 'assets/img/config-icon.png',
+    alt: 'Conf',
+  };
+
+  mainLogo: ImgSrc = {
+    src: 'assets/img/logo-main.jpg',
+    alt: 'Conf',
+  };
 
   constructor() {}
 

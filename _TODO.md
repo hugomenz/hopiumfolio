@@ -21,7 +21,7 @@ https://api.coingecko.com/api/v3/simple/supported_vs_currencies
 Y te devuelve el siguiente array
 [ "btc", "eth", "ltc", "bch", "zar", ... , "xdr", "xag", "xau", "bits", "sats" ]
 
-### NUEVO _COMPONENTE_ Menu de configuración
+### **estoy currando aqui** NUEVO _COMPONENTE_ Menu de configuración
 
 Al hacer click sobre el menú, se oculta el componente principal y se muestra unicamente el componente configuracion
 Desde ahí podremos, en principio, seleccionar lo siguiente:

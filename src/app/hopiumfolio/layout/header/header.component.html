@@ -1,9 +1,16 @@
 <mat-toolbar color="primary" class="menu flex">
+  <img src="{{ mainLogo.src }}" alt="{{ mainLogo.alt }}" />
   <span>Hopiumfolio</span>
-  <div class="logo">
-    <img routerLink="portfolio" src="{{ portfolioSrc }}" alt="Portf" />
+
+  <div class="menu-nav">
+    <img
+      routerLink="portfolio"
+      src="{{ portfolio.src }}"
+      alt="{{ portfolio.alt }}"
+    />
   </div>
-  <div class="logo">
-    <img routerLink="config" src="{{ configSrc }}" alt="Portf" />
+
+  <div class="menu-nav">
+    <img routerLink="config" src="{{ config.src }}" alt="{{ config.alt }}" />
   </div>
 </mat-toolbar>
