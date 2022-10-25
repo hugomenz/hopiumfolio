@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 const materialModules = [
   MatAutocompleteModule,
@@ -17,6 +18,7 @@ const materialModules = [
   MatButtonModule,
   MatIconModule,
   MatTableModule,
+  MatToolbarModule,
 ];
 @NgModule({
   imports: [CommonModule, ...materialModules],

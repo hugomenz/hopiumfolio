@@ -7,7 +7,7 @@ import { HopiumRoutingModule } from './hopiumfolio-routing.module';
 import { AngularMaterialModule } from '../angular-material.module';
 import { ConfigComponent } from './components/config/config.component';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
-import { FooterComponent } from './layout/footer/footer.component';
+import { HeaderComponent } from './layout/header/header.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +16,7 @@ import { FooterComponent } from './layout/footer/footer.component';
     HopiumfolioComponent,
     ConfigComponent,
     PortfolioComponent,
+    HeaderComponent,
   ],
   imports: [CommonModule, HopiumRoutingModule, AngularMaterialModule],
 })

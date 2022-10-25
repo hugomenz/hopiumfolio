@@ -8,7 +8,7 @@ Todas estas cosas se pueden plantear y desarrollarlas por encima
 - hopiumGains queda pendiente de actualizar dependiendo del valor puesto por el input
 - crear objeto con variables para pasárselo al resumen del portfolio
 
-## NUEVO _COMPONENTE_ Header
+## **estoy currando aqui** NUEVO _COMPONENTE_ Header
 
 - input para seleccionar la divisa
 - menú de configuración
@@ -62,7 +62,3 @@ La variable _selectedCurrency_ se le va a pasar a:
 Parecido al servicio _currency-selected_ En este caso, el usuario puede elegir entre [ % | X ]. Se modifica una variable con '%' o 'X' y se le inyecta al componente tabla.
 
 > Desde este servicio se tiene que poder actualizar la variable _hopiumMultiply_ ya que el valor cambia ( 200% vs 2 X )
-
-### ADD Coingecko al Footer
-
-<a href="https://www.coingecko.com" target="_blank" rel="noreferrer nofollow"><div class="coingecko-wrapper"><span>Hopium given by</span><img src="https://www.marketcapof.com/prefetch/coingecko.svg" alt="coingecko" width="88" height="23"></div></a>
