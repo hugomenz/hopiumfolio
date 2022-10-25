@@ -2,6 +2,12 @@
 
 Todas estas cosas se pueden plantear y desarrollarlas por encima
 
+## UPDATE _COMPONENTE_ Table
+
+- tomar el valor del input del numero de tokens
+- hopiumGains queda pendiente de actualizar dependiendo del valor puesto por el input
+- crear objeto con variables para pasárselo al resumen del portfolio
+
 ## NUEVO _COMPONENTE_ Header
 
 - input para seleccionar la divisa
@@ -30,6 +36,14 @@ Desde ahí podremos, en principio, seleccionar lo siguiente:
 
 - 💡 Opcion lenguaje -> español, alemán e inglés... Podría funcionar a través de github abierto para la comunidad crypto...who knows?
 - 💡 Elegir entre 3 plantillas (por ejemplo) para compartir por twitter
+
+### NUEVO _COMPONENTE_ ResumePortfolio
+
+Para hacer este componente, el componente _search.component_ tiene que estar dentro de una _mat-card_. Una vez que se crea la tabla, aparece un resumen del portfolio a la derecha de la carta de search, que se rodará hacia la izquierda para hacer hueco.
+
+El resumen de porfolio se puede mostrar un _gráfico de queso_ con la composición del portfolio. El porcentaje ( % ) o multiplo ( X ) total del mismo, según se haya elegido y los hopium gains.
+
+> mostrar los hopium gains con el boton para ocultarlo con asteriscos.
 
 ### NUEVO _SERVICIO_ _currency-selected_
 
