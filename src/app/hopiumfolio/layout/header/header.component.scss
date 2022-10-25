@@ -1,0 +1,19 @@
+@import "/src/assets/scss/variables.scss";
+img {
+  width: $header-logo-width-100;
+}
+
+.logo:hover img {
+  cursor: pointer;
+  transform: scale(0.95);
+}
+
+div:nth-child(2) {
+  position: absolute;
+  right: 16rem;
+}
+
+div:nth-child(3) {
+  position: absolute;
+  right: 8rem;
+}
