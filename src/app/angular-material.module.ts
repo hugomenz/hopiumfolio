@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
 
 const materialModules = [
   MatAutocompleteModule,
@@ -19,6 +20,7 @@ const materialModules = [
   MatIconModule,
   MatTableModule,
   MatToolbarModule,
+  MatCardModule,
 ];
 @NgModule({
   imports: [CommonModule, ...materialModules],

@@ -1,6 +1,6 @@
 <div class="table-container">
   <div class="flex-center" *ngIf="searchData.isEmpty">
-    <h1 class="neonText">CREATE A NEW PORTFOLIO!</h1>
+    <h1 class="neonText">START YOUR HOPIUMFOLIO!</h1>
   </div>
 </div>
 
@@ -21,24 +21,21 @@
     <ng-container matColumnDef="amountToken">
       <mat-header-cell *matHeaderCellDef> Number of Tokens </mat-header-cell>
       <mat-cell *matCellDef="let element; let i = index">
-        <form class="example-form">
-          <mat-form-field
-            class="crypto-field example-full-width"
-            appearance="fill"
-          >
-            <mat-label>Amount Tokens</mat-label>
-            <input
-              color="warning"
-              type="number"
-              placeholder="Number of Tokens"
-              aria-label="Number"
-              matInput
-              [formControl]="givenTokenAmount"
-              [(ngModel)]="searchData.tableRowList[i].amountToken"
-              (blur)="searchData.getGain(i)"
-            />
-          </mat-form-field>
-        </form>
+        <mat-form-field
+          class="crypto-field example-full-width"
+          appearance="fill"
+        >
+          <mat-label>Amount Tokens</mat-label>
+          <input
+            color="warning"
+            type="number"
+            placeholder="Number of Tokens"
+            aria-label="Number"
+            matInput
+            [(ngModel)]="searchData.tableRowList[i].amountToken"
+            (blur)="searchData.getGain(i)"
+          />
+        </mat-form-field>
       </mat-cell>
     </ng-container>
 
