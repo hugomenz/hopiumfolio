@@ -61,6 +61,9 @@ export class SearchComponent implements OnInit {
   }
 
   newRow() {
+    // TODO
+    // What if firstCoin or secondCoin are not selected?
+
     this.coinGecko.getCoinData(this.firstCoin.id).subscribe((data) => {
       this.selectedFirstCryptoData = data;
     });
