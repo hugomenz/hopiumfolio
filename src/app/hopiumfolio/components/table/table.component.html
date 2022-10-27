@@ -1,97 +1,83 @@
 <div class="table-container">
-  <div class="flex-center" *ngIf="searchData.isEmpty">
-    <h1 class="neonText">START YOUR HOPIUMFOLIO!</h1>
-  </div>
+    <div class="flex-center" *ngIf="_newRowService.isEmpty">
+        <h1 class="neonText">START YOUR HOPIUMFOLIO!</h1>
+    </div>
 </div>
 
-<div class="table-container mat-elevation-z8" *ngIf="!searchData.isEmpty">
-  <mat-table #table [dataSource]="searchData.tableDataSource">
-    <!--- Note that these columns can be defined in any order.
+<div class="table-container mat-elevation-z8" *ngIf="!_newRowService.isEmpty">
+    <mat-table #table [dataSource]="tableDataSource">
+        <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
 
-    <!-- Logo 1 Column -->
-    <ng-container matColumnDef="logoFirst">
-      <mat-header-cell *matHeaderCellDef> Logo 1 </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <img src="{{ element.logoFirst }}" alt="" />
-      </mat-cell>
-    </ng-container>
+        <!-- Logo 1 Column -->
+        <ng-container matColumnDef="logoFirst">
+            <mat-header-cell *matHeaderCellDef> Logo 1 </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <img src="{{ element.logoFirst }}" alt="" />
+            </mat-cell>
+        </ng-container>
 
-    <!-- NumberTokens -->
-    <ng-container matColumnDef="amountToken">
-      <mat-header-cell *matHeaderCellDef> Number of Tokens </mat-header-cell>
-      <mat-cell *matCellDef="let element; let i = index">
-        <mat-form-field
-          class="crypto-field example-full-width"
-          appearance="fill"
-        >
-          <mat-label>Amount Tokens</mat-label>
-          <input
-            color="warning"
-            type="number"
-            placeholder="Number of Tokens"
-            aria-label="Number"
-            matInput
-            [(ngModel)]="searchData.tableRowList[i].amountToken"
-            (blur)="searchData.getGain(i)"
-          />
-        </mat-form-field>
-      </mat-cell>
-    </ng-container>
+        <!-- NumberTokens -->
+        <ng-container matColumnDef="amountToken">
+            <mat-header-cell *matHeaderCellDef> Number of Tokens </mat-header-cell>
+            <mat-cell *matCellDef="let element; let i = index">
+                <mat-form-field class="crypto-field example-full-width" appearance="fill">
+                    <mat-label>Amount Tokens</mat-label>
+                    <input color="warning" type="number" placeholder="Number of Tokens" aria-label="Number" matInput [(ngModel)]="_newRowService.tableRowList[i].amountToken" (blur)="_newRowService.getGain(i)" />
+                </mat-form-field>
+            </mat-cell>
+        </ng-container>
 
-    <!-- First Crypto Column -->
-    <ng-container matColumnDef="cryptoFirst">
-      <mat-header-cell *matHeaderCellDef> Crypto 1 </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        {{ element.cryptoFirst.toUpperCase() }}
-      </mat-cell>
-    </ng-container>
+        <!-- First Crypto Column -->
+        <ng-container matColumnDef="cryptoFirst">
+            <mat-header-cell *matHeaderCellDef> Crypto 1 </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                {{ element.cryptoFirst.toUpperCase() }}
+            </mat-cell>
+        </ng-container>
 
-    <!-- Logo 2 Column -->
-    <ng-container matColumnDef="logoSecond">
-      <mat-header-cell *matHeaderCellDef> Logo 2 </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <img src="{{ element.logoSecond }}" alt="" />
-      </mat-cell>
-    </ng-container>
+        <!-- Logo 2 Column -->
+        <ng-container matColumnDef="logoSecond">
+            <mat-header-cell *matHeaderCellDef> Logo 2 </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <img src="{{ element.logoSecond }}" alt="" />
+            </mat-cell>
+        </ng-container>
 
-    <!-- Second Crypto Column -->
-    <ng-container matColumnDef="cryptoSecond">
-      <mat-header-cell *matHeaderCellDef> Crypto 2 </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        {{ element.cryptoSecond.toUpperCase() }}
-      </mat-cell>
-    </ng-container>
+        <!-- Second Crypto Column -->
+        <ng-container matColumnDef="cryptoSecond">
+            <mat-header-cell *matHeaderCellDef> Crypto 2 </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                {{ element.cryptoSecond.toUpperCase() }}
+            </mat-cell>
+        </ng-container>
 
-    <!-- Multiply Column -->
-    <ng-container matColumnDef="multiply">
-      <mat-header-cell *matHeaderCellDef> Hopiumply </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.multiply }}X</mat-cell>
-    </ng-container>
+        <!-- Multiply Column -->
+        <ng-container matColumnDef="multiply">
+            <mat-header-cell *matHeaderCellDef> Hopiumply </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.multiply }}X</mat-cell>
+        </ng-container>
 
-    <!-- Price Column -->
-    <ng-container matColumnDef="price">
-      <mat-header-cell *matHeaderCellDef> Precium </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.price }} </mat-cell>
-    </ng-container>
+        <!-- Price Column -->
+        <ng-container matColumnDef="price">
+            <mat-header-cell *matHeaderCellDef> Precium </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.price }} </mat-cell>
+        </ng-container>
 
-    <!-- Gains Column -->
-    <ng-container matColumnDef="gain">
-      <mat-header-cell *matHeaderCellDef> Hopiums </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{ element.gain }} </mat-cell>
-    </ng-container>
+        <!-- Gains Column -->
+        <ng-container matColumnDef="gain">
+            <mat-header-cell *matHeaderCellDef> Value </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.gain }} </mat-cell>
+        </ng-container>
 
-    <!-- Delete Button -->
-    <ng-container matColumnDef="delete">
-      <mat-header-cell *matHeaderCellDef> Hopiums </mat-header-cell>
-      <mat-cell><button (click)="searchData.delete()">X</button></mat-cell>
-    </ng-container>
+        <!-- Delete Button -->
+        <ng-container matColumnDef="delete">
+            <mat-header-cell *matHeaderCellDef> Delete </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <button mat-button (click)="_newRowService.delete(element.id)"> <mat-icon color="primary">close</mat-icon> </button></mat-cell>
+        </ng-container>
 
-    <mat-header-row
-      *matHeaderRowDef="searchData.displayedColumns"
-    ></mat-header-row>
-    <mat-row
-      *matRowDef="let row; columns: searchData.displayedColumns"
-    ></mat-row>
-  </mat-table>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
 </div>
