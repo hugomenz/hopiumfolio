@@ -1,5 +1,7 @@
 import {
+  AfterViewChecked,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   Input,
   OnInit,
@@ -12,10 +14,15 @@ import { NewRowService } from '../../services/new-row.service';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements AfterViewChecked {
   givenTokenAmount = new FormControl('');
 
-  constructor(public searchData: NewRowService) {}
+  constructor(
+    public searchData: NewRowService,
+    private readonly changeDetectorRef: ChangeDetectorRef
+  ) {}
 
-  ngOnInit(): void {}
+  ngAfterViewChecked(): void {
+    this.changeDetectorRef.detectChanges();
+  }
 }
