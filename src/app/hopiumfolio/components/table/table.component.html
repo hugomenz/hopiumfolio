@@ -1,8 +1,10 @@
-<div class="table flex" *ngIf="searchData.isEmpty">
-  <h1>CREATE A NEW PORTFOLIO!</h1>
+<div class="table-container">
+  <div class="flex-center" *ngIf="searchData.isEmpty">
+    <h1 class="neonText">CREATE A NEW PORTFOLIO!</h1>
+  </div>
 </div>
 
-<div class="example-container mat-elevation-z8" *ngIf="!searchData.isEmpty">
+<div class="table-container mat-elevation-z8" *ngIf="!searchData.isEmpty">
   <mat-table #table [dataSource]="searchData.tableDataSource">
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
@@ -12,6 +14,31 @@
       <mat-header-cell *matHeaderCellDef> Logo 1 </mat-header-cell>
       <mat-cell *matCellDef="let element">
         <img src="{{ element.logoFirst }}" alt="" />
+      </mat-cell>
+    </ng-container>
+
+    <!-- NumberTokens -->
+    <ng-container matColumnDef="amountToken">
+      <mat-header-cell *matHeaderCellDef> Number of Tokens </mat-header-cell>
+      <mat-cell *matCellDef="let element; let i = index">
+        <form class="example-form">
+          <mat-form-field
+            class="crypto-field example-full-width"
+            appearance="fill"
+          >
+            <mat-label>Amount Tokens</mat-label>
+            <input
+              color="warning"
+              type="number"
+              placeholder="Number of Tokens"
+              aria-label="Number"
+              matInput
+              [formControl]="givenTokenAmount"
+              [(ngModel)]="searchData.tableRowList[i].amountToken"
+              (blur)="searchData.getGain(i)"
+            />
+          </mat-form-field>
+        </form>
       </mat-cell>
     </ng-container>
 

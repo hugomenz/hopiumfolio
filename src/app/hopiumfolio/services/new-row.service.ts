@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { Exchange } from 'src/app/interfaces/searchResponse.interface';
 import { RowInfo } from 'src/app/interfaces/coin-portfolio.interface';
@@ -10,6 +10,7 @@ import { CoinFullData } from 'src/app/interfaces/coin.interface';
 export class NewRowService {
   displayedColumns = [
     'logoFirst',
+    'amountToken',
     'cryptoFirst',
     'logoSecond',
     'cryptoSecond',
@@ -26,6 +27,8 @@ export class NewRowService {
 
   hopiumMultiply!: number;
   hopiumPrice!: number;
+  //hopiumGain: number = 0;
+  amountToken: number[] = [];
 
   constructor() {}
 
@@ -47,27 +50,34 @@ export class NewRowService {
     );
   }
 
-  getHopiumPrice(mult: number) {
-    return Math.round(this.cryptoInfoList[0].current_price * mult * 100) / 100;
+  getHopiumPrice() {
+    return (
+      Math.round(
+        this.cryptoInfoList[0].current_price * this.getHopiumMultiplier() * 100
+      ) / 100
+    );
+  }
+
+  createRowInfo(): RowInfo {
+    return {
+      logoFirst: this.cryptoInfoList[0].image,
+      amountToken: 0,
+      cryptoFirst: this.cryptoInfoList[0].symbol.toUpperCase(),
+      logoSecond: this.cryptoInfoList[1].image,
+      cryptoSecond: this.cryptoInfoList[1].symbol.toUpperCase(),
+      multiply: this.getHopiumMultiplier(),
+      price: this.getHopiumPrice(),
+      gain: 0,
+    };
+  }
+
+  getGain(index: number) {
+    this.tableRowList[index].gain =
+      this.tableRowList[index].amountToken * this.tableRowList[index].price;
   }
 
   isPortfolioEmpty() {
     return this.cryptoInfoList.length === 0 ? true : false;
-  }
-
-  createRowInfo(): RowInfo {
-    this.hopiumMultiply = this.getHopiumMultiplier();
-    this.hopiumPrice = this.getHopiumPrice(this.hopiumMultiply);
-
-    return {
-      logoFirst: this.cryptoInfoList[0].image,
-      cryptoFirst: this.cryptoInfoList[0].symbol.toUpperCase(),
-      logoSecond: this.cryptoInfoList[1].image,
-      cryptoSecond: this.cryptoInfoList[1].symbol.toUpperCase(),
-      multiply: this.hopiumMultiply,
-      price: this.hopiumPrice,
-      gain: 0,
-    };
   }
 
   delete() {

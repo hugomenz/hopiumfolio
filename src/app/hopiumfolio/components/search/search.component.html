@@ -1,8 +1,9 @@
 <div class="search">
   <form class="example-form">
-    <mat-form-field class="example-full-width" appearance="fill">
+    <mat-form-field class="crypto-field example-full-width" appearance="fill">
       <mat-label>Selected Coin</mat-label>
       <input
+        color="warning"
         class="crypto-search"
         type="text"
         placeholder="Pick one"
@@ -10,19 +11,28 @@
         matInput
         [formControl]="coinSelected"
         [matAutocomplete]="auto"
-        color="warning"
         [(ngModel)]="firstCoin"
       />
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayWith">
-        <mat-option *ngFor="let option of filteredCoins" [value]="option">
+        <mat-option
+          *ngFor="let option of filteredCoins"
+          [value]="option"
+          color="warning"
+        >
           {{ option.name }} - Rank: {{ option.market_cap_rank }}
         </mat-option>
       </mat-autocomplete>
     </mat-form-field>
   </form>
-  <mat-icon color="primary">arrow_forward</mat-icon>
+
+  <mat-icon color="accent">arrow_forward</mat-icon>
+
   <form class="example-form">
-    <mat-form-field class="example-full-width" appearance="fill">
+    <mat-form-field
+      class="example-full-width"
+      appearance="fill"
+      color="warning"
+    >
       <mat-label>Selected MC Coin</mat-label>
       <input
         type="text"
@@ -40,9 +50,10 @@
       </mat-autocomplete>
     </mat-form-field>
   </form>
+
   <button
     mat-icon-button
-    color="primary"
+    color="accent"
     aria-label="Example icon button with a menu icon"
     (click)="newRow()"
   >
