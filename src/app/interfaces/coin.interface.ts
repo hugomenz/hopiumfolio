@@ -26,3 +26,7 @@ export interface CoinFullData {
   roi: null;
   last_updated: Date;
 }
+export interface newRowResponse {
+  firstCoin: CoinFullData;
+  secondCoin: CoinFullData;
+}
