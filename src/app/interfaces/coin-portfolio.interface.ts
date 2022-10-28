@@ -1,4 +1,5 @@
 export interface RowInfo {
+  id: number;
   logoFirst: string;
   amountToken: number | any;
   cryptoFirst: string;

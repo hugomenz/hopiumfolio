@@ -22,6 +22,6 @@ export class ApiCoingeckoService {
 
   getCoinData(id: string) {
     const apiUrl = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${id}&order=gecko_desc&per_page=10&page=1&sparkline=false`;
-    return this.http.get<CoinFullData>(apiUrl);
+    return this.http.get<CoinFullData[]>(apiUrl);
   }
 }
