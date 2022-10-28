@@ -8,6 +8,8 @@ import { AngularMaterialModule } from '../angular-material.module';
 import { ConfigComponent } from './components/config/config.component';
 import { PortfolioComponent } from './components/portfolio/portfolio.component';
 import { HeaderComponent } from './layout/header/header.component';
+import { ChartPortfolioComponent } from './components/portfolio-chart/chart-portfolio.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,13 @@ import { HeaderComponent } from './layout/header/header.component';
     ConfigComponent,
     PortfolioComponent,
     HeaderComponent,
+    ChartPortfolioComponent,
   ],
-  imports: [CommonModule, HopiumRoutingModule, AngularMaterialModule],
+  imports: [
+    CommonModule,
+    HopiumRoutingModule,
+    AngularMaterialModule,
+    NgxChartsModule,
+  ],
 })
 export class HopiumfolioModule {}

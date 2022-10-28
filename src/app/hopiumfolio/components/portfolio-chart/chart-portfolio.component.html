@@ -1,0 +1,17 @@
+<ngx-charts-pie-chart
+  [view]="view"
+  [scheme]="colorScheme"
+  [results]="_portfolioData.chartDataList"
+  [gradient]="gradient"
+  [legend]="showLegend"
+  [legendPosition]="legendPosition"
+  [labels]="showLabels"
+  [maxLabelLength]="maxLabelLength"
+  [doughnut]="isDoughnut"
+  [explodeSlices]="isExplodeSlices"
+  (select)="onSelect($event)"
+  (activate)="onActivate($event)"
+  (deactivate)="onDeactivate($event)"
+  style="fill: #ffffff"
+>
+</ngx-charts-pie-chart>
