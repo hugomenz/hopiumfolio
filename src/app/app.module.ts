@@ -14,7 +14,6 @@ import { AngularMaterialModule } from './angular-material.module';
     BrowserModule,
     HopiumfolioModule,
     AppRoutingModule,
-
     HttpClientModule,
     BrowserAnimationsModule,
     AngularMaterialModule,

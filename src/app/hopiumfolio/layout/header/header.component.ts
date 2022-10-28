@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { NewRowService } from '../../services/new-row.service';
+import { PortfolioDataService } from '../../services/portfolio-data.service';
 interface ImgSrc {
   src: string;
   alt: string;
@@ -25,7 +27,10 @@ export class HeaderComponent implements OnInit {
     alt: 'Conf',
   };
 
-  constructor() {}
+  constructor(
+    public _newRowData: NewRowService,
+    public _portfolioData: PortfolioDataService
+  ) {}
 
   ngOnInit(): void {}
 }
