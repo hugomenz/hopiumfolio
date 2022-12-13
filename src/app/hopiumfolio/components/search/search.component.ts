@@ -15,6 +15,7 @@ import { CoinFullData } from 'src/app/interfaces/coin.interface';
 import { SearchResponse } from 'src/app/interfaces/searchResponse.interface';
 import { Coin } from '../../../interfaces/searchResponse.interface';
 import { ApiCoingeckoService } from '../../services/api-coingecko.service';
+import { CurrencySelectedService } from '../../services/currency-selected.service';
 import { NewRowService } from '../../services/new-row.service';
 
 @Component({
@@ -31,8 +32,9 @@ export class SearchComponent implements OnInit {
   selectedSecondCryptoData!: CoinFullData;
 
   constructor(
-    private coinGecko: ApiCoingeckoService,
-    public _newRowService: NewRowService
+    private _coinGecko: ApiCoingeckoService,
+    public _newRowService: NewRowService,
+    public _currencySelected: CurrencySelectedService
   ) {}
 
   ngOnInit() {
@@ -41,10 +43,10 @@ export class SearchComponent implements OnInit {
         distinctUntilChanged(),
         debounceTime(300),
         switchMap((value) => {
-          if(this.coinSelected.value === undefined){
-            return this.coinGecko.searchCoin('')
-          } else{
-            return this.coinGecko.searchCoin(value as string)
+          if (this.coinSelected.value === undefined) {
+            return this._coinGecko.searchCoin('');
+          } else {
+            return this._coinGecko.searchCoin(value as string);
           }
         })
       )
@@ -63,18 +65,24 @@ export class SearchComponent implements OnInit {
   }
 
   newRow() {
-    if(this.firstCoin && this.secondCoin){
-      const requestFirstCoin = this.coinGecko.getCoinData(this.firstCoin.id);
+    if (this.firstCoin && this.secondCoin) {
+      const requestFirstCoin = this._coinGecko.getCoinData(
+        this._currencySelected.currencySelected,
+        this.firstCoin.id
+      );
 
-      const requestSecondCoin = this.coinGecko.getCoinData(this.secondCoin.id);
+      const requestSecondCoin = this._coinGecko.getCoinData(
+        this._currencySelected.currencySelected,
+        this.secondCoin.id
+      );
 
-      forkJoin([requestFirstCoin, requestSecondCoin]).subscribe( response => {
+      forkJoin([requestFirstCoin, requestSecondCoin]).subscribe((response) => {
         this.selectedFirstCryptoData = response[0][0];
         this.selectedSecondCryptoData = response[1][0];
-        if(this.selectedFirstCryptoData && this.selectedSecondCryptoData){
+        if (this.selectedFirstCryptoData && this.selectedSecondCryptoData) {
           this._newRowService.newRow({
             firstCoin: this.selectedFirstCryptoData,
-            secondCoin: this.selectedSecondCryptoData
+            secondCoin: this.selectedSecondCryptoData,
           });
         }
       });

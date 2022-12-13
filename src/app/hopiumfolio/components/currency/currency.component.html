@@ -1,0 +1,23 @@
+<form class="example-form">
+  <mat-form-field class="crypto-field example-full-width" appearance="fill">
+    <mat-label>Selected Coin</mat-label>
+    <input
+      type="text"
+      placeholder="Pick one"
+      aria-label="Number"
+      matInput
+      [formControl]="currencySelected"
+      [matAutocomplete]="auto"
+      [(ngModel)]="currency"
+      (blur)="_currencySelected.updateCurrency(currency)"
+    />
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayWith">
+      <mat-option
+        *ngFor="let currency of filteredCurrency | async"
+        [value]="currency"
+      >
+        {{ currency.toUpperCase() }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>

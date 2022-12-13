@@ -516,14 +516,10 @@
   },
   {
     "id": "TRY",
-    "symbol": null,
+    "symbol": "&#8378;",
     "currency": "Turkey Lira"
   },
-  {
-    "id": "TRL",
-    "symbol": "&#8356;",
-    "currency": "Turkey Lira"
-  },
+
   {
     "id": "TVD",
     "symbol": "&#36;",
