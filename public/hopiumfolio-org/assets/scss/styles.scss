@@ -1,0 +1,45 @@
+html,
+body {
+  height: 100%;
+  background-color: #010a01;
+}
+
+body {
+  margin: 0;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
+}
+
+.search {
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  background-color: rgb(23, 24, 22);
+  align-items: center;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.example-form {
+  margin: 1rem;
+}
+
+.mat-form-field-autofill-control {
+  font-size: 1.1rem !important;
+  color: white !important; // your prefered color
+}
