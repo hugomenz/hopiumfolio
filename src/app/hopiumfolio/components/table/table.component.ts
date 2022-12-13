@@ -10,6 +10,7 @@ import { FormControl } from '@angular/forms';
 import { NewRowService } from '../../services/new-row.service';
 import { RowInfo } from '../../../interfaces/coin-portfolio.interface';
 import { MatTableDataSource } from '@angular/material/table';
+import { CurrencySelectedService } from '../../services/currency-selected.service';
 
 @Component({
   selector: 'app-table',
@@ -26,7 +27,7 @@ export class TableComponent implements OnInit {
     'multiply',
     'price',
     'gain',
-    'delete'
+    'delete',
   ];
 
   tableDataSource!: any;
@@ -35,16 +36,18 @@ export class TableComponent implements OnInit {
 
   constructor(
     public _newRowService: NewRowService,
-    ) {
+    public _currencySelected: CurrencySelectedService
+  ) {
+    if (this._newRowService.isEmpty == false) {
+      this.tableDataSource = new MatTableDataSource<RowInfo>(
+        this._newRowService.tableRowList
+      );
+    }
   }
 
   ngOnInit(): void {
-    this._newRowService.getRows()
-        .subscribe(rows => {
-          this.tableDataSource = new MatTableDataSource<RowInfo>(rows);
+    this._newRowService.getRows().subscribe((rows) => {
+      this.tableDataSource = new MatTableDataSource<RowInfo>(rows);
     });
-
-
   }
-
 }

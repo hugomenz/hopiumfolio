@@ -3,10 +3,10 @@
     <mat-form-field class="crypto-field example-full-width" appearance="fill">
       <mat-label>Selected Coin</mat-label>
       <input
-        color="warning"
         class="crypto-search"
         type="text"
-        placeholder="Pick one"
+        placeholder="Pick
+      one"
         aria-label="Number"
         matInput
         [formControl]="coinSelected"
@@ -14,11 +14,7 @@
         [(ngModel)]="firstCoin"
       />
       <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayWith">
-        <mat-option
-          *ngFor="let option of filteredCoins"
-          [value]="option"
-          color="warning"
-        >
+        <mat-option *ngFor="let option of filteredCoins" [value]="option">
           {{ option.name }} - Rank: {{ option.market_cap_rank }}
         </mat-option>
       </mat-autocomplete>

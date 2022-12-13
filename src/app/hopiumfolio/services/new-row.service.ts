@@ -9,11 +9,12 @@ import { Observable, Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class NewRowService {
+export class NewRowService implements OnInit {
+  tableRowList: RowInfo[] = JSON.parse(
+    localStorage.getItem('portfolio') || '[]'
+  );
 
-  tableRowList: RowInfo[] = [];
   tableRowList$: Subject<RowInfo[]> = new Subject();
-
 
   isEmpty: boolean = true;
   idCounter: number = 0;
@@ -24,23 +25,51 @@ export class NewRowService {
   amountToken: number[] = [];
 
   constructor() {
+    if (this.tableRowList.length != 0) {
+      this.isEmpty = false;
+      this.tableRowList$.next(this.tableRowList);
+      console.log(this.tableRowList);
+    }
   }
 
-  public newRow(dataFromSearch: newRowResponse): void{
+  ngOnInit(): void {}
+
+  public newRow(dataFromSearch: newRowResponse): void {
     this.isEmpty = false;
-    this.idCounter += 1;
+
+    // if table is not empty in localstorage should get last id
+    if (this.tableRowList.length != 0) {
+      this.idCounter = this.tableRowList[this.tableRowList.length - 1].id + 1;
+    } else {
+      this.idCounter += 1;
+    }
+
     this.tableRowList.push(this.mapNewRow(dataFromSearch));
+
+    localStorage.setItem('portfolio', JSON.stringify(this.tableRowList));
+
     this.tableRowList$.next(this.tableRowList);
-    console.log('%cnew-row.service.ts line:32 object', 'color: #007acc;', this.tableRowList);
+    console.log(
+      '%cnew-row.service.ts line:32 object',
+      'color: #007acc;',
+      this.tableRowList
+    );
   }
 
-  public getRows(){
+  public getRows() {
     return this.tableRowList$.asObservable();
   }
 
   public delete(id: number) {
-    this.tableRowList = this.tableRowList.filter(row => row.id !== id);
+    this.tableRowList = this.tableRowList.filter((row) => row.id !== id);
+
+    localStorage.setItem('portfolio', JSON.stringify(this.tableRowList)); // update localstorage state
+
     this.tableRowList$.next(this.tableRowList);
+
+    if (this.tableRowList.length == 0) {
+      this.isEmpty = true;
+    }
   }
 
   private mapNewRow(data: newRowResponse): RowInfo {
@@ -56,32 +85,26 @@ export class NewRowService {
       multiply: this.getHopiumMultiplier(firstCoin, secondCoin),
       price: this.getHopiumPrice(firstCoin, secondCoin),
       gain: 0,
-    }
-    return rowInfo
+    };
+    return rowInfo;
   }
 
   public getGain(index: number) {
     this.tableRowList[index].gain =
-    this.tableRowList[index].amountToken * this.tableRowList[index].price;
+      this.tableRowList[index].amountToken * this.tableRowList[index].price;
+
+    localStorage.setItem('portfolio', JSON.stringify(this.tableRowList)); // update localstorage state
   }
 
   private getHopiumPrice(first: CoinFullData, second: CoinFullData) {
     return (
       Math.round(
         first.current_price * this.getHopiumMultiplier(first, second) * 100
-        ) / 100
-        );
-      }
-
-  private getHopiumMultiplier(first: CoinFullData, second: CoinFullData) {
-    return (
-      Math.round(
-        (second.market_cap /
-          first.market_cap) *
-          100
       ) / 100
     );
   }
 
-
+  private getHopiumMultiplier(first: CoinFullData, second: CoinFullData) {
+    return Math.round((second.market_cap / first.market_cap) * 100) / 100;
+  }
 }
