@@ -3,7 +3,7 @@
 <p align="center">
 <img src="src/assets/img/logo-main.jpg" alt="drawing" width="150"/>
 
-Hopiumfolio is a web application that allows users to compare the market capitalization of different cryptocurrencies and add them to their portfolio. With Hopiumfolio, novice investors can explore different "what if" scenarios and track the value of their virtual holdings in real time.
+Introducing Hopiumfolio - the web app that's like a lottery ticket for the crypto world! With Hopiumfolio, you can select any two cryptocurrencies from our dropdown menu (powered by the CoinGecko API) and compare their market cap. Then, you can add them to your virtual portfolio and specify how many tokens you "own" (hint: it's probably not as many as you'd like). But that's okay, because Hopiumfolio isn't about making you rich - it's about giving you false hope. So why not give it a try and see how much your imaginary riches are worth? After all, it's free and it's fun - and who knows, maybe one day you'll strike crypto gold and make all your wildest dreams come true. Or maybe you'll just end up with a bunch of useless digital tokens. Either way, it's worth a shot!
 
 # Features
 
