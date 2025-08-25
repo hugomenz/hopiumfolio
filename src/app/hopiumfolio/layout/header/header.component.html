@@ -2,6 +2,16 @@
   <img src="{{ mainLogo.src }}" alt="{{ mainLogo.alt }}" />
   <span>Hopiumfolio</span>
 
+  <div class="spacer"></div>
+  
+  <!-- Theme Toggle -->
+  <app-theme-toggle></app-theme-toggle>
+
+  <!-- Currency Selector -->
+  <div class="header-currency">
+    <app-currency></app-currency>
+  </div>
+
   <!--   <div class="menu-nav">
     <img
       routerLink="portfolio"
@@ -13,9 +23,5 @@
 
   <!--   <div class="menu-nav">
     <img routerLink="config" src="{{ config.src }}" alt="{{ config.alt }}" />
-  </div> -->
-
-  <!--   <div>
-    <app-currency></app-currency>
   </div> -->
 </mat-toolbar>

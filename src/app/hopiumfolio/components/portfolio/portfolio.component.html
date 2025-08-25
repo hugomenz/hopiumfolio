@@ -1,9 +1,14 @@
-<div class="content">
-  <mat-card class="gallery-container">
+<div class="portfolio-container">
+  <div class="chart-section">
     <chart-portfolio></chart-portfolio>
-  </mat-card>
-</div>
-
-<div class="flex">
-  <button routerLink="">exit</button>
+  </div>
+  
+  <div class="portfolio-actions" *ngIf="!_newRowService.isEmpty">
+    <div class="flex-center">
+      <button mat-raised-button color="primary" routerLink="" class="hopium-btn">
+        <mat-icon>arrow_back</mat-icon>
+        Back to Portfolio
+      </button>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,60 @@
+.currency-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.currency-form {
+  margin: 0;
+}
+
+.currency-field {
+  min-width: 200px;
+}
+
+.current-currency {
+  display: flex;
+  align-items: center;
+}
+
+.currency-display {
+  background-color: rgba(157, 0, 255, 0.1);
+  color: var(--hopium-primary);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(157, 0, 255, 0.3);
+  font-weight: bold;
+  font-size: 0.875rem;
+}
+
+.currency-option {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.currency-symbol {
+  color: var(--hopium-primary);
+  font-weight: bold;
+  margin-left: 0.5rem;
+}
+
+.currency-option small {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+}
+
+@media (max-width: 768px) {
+  .currency-selector {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .currency-field {
+    min-width: 150px;
+  }
+  
+  .current-currency {
+    margin-top: 0.5rem;
+  }
+}

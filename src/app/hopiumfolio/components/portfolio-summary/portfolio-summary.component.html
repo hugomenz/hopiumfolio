@@ -1,0 +1,66 @@
+<div class="portfolio-summary-container" *ngIf="!newRowService.isEmpty">
+  <div class="hopium-card">
+    <div class="hopium-card-header">
+      <h2 class="hopium-card-title">
+        <mat-icon>account_balance_wallet</mat-icon>
+        Portfolio Summary
+      </h2>
+      <p class="text-muted text-sm">Last updated: {{ metrics.lastUpdated | date:'short' }}</p>
+    </div>
+
+    <div class="portfolio-metrics-grid">
+      <!-- Total Portfolio Value -->
+      <div class="portfolio-metric">
+        <div class="portfolio-metric-value">
+          {{ metrics.totalValue | currency:currencySelected.currencySelected.toUpperCase():'symbol-narrow':'1.2-2' }}
+        </div>
+        <div class="portfolio-metric-label">Total Value</div>
+      </div>
+
+      <!-- 24h Change -->
+      <div class="portfolio-metric">
+        <div class="portfolio-metric-value" [ngClass]="changeClass">
+          <mat-icon>{{ changeIcon }}</mat-icon>
+          {{ metrics.totalChange24h | currency:currencySelected.currencySelected.toUpperCase():'symbol-narrow':'1.2-2' }}
+        </div>
+        <div class="portfolio-metric-label">24h Change</div>
+      </div>
+
+      <!-- 24h Change Percentage -->
+      <div class="portfolio-metric">
+        <div class="portfolio-metric-value" [ngClass]="changeClass">
+          {{ metrics.totalChangePercent24h | number:'1.2-2' }}%
+        </div>
+        <div class="portfolio-metric-label">24h Change %</div>
+      </div>
+
+      <!-- Total Holdings -->
+      <div class="portfolio-metric">
+        <div class="portfolio-metric-value text-primary">
+          {{ metrics.totalHoldings }}
+        </div>
+        <div class="portfolio-metric-label">Assets</div>
+      </div>
+    </div>
+
+    <!-- Top Asset Info -->
+    <div class="top-asset-info" *ngIf="metrics.topAsset">
+      <div class="flex align-center">
+        <mat-icon class="text-accent">star</mat-icon>
+        <span class="text-lg font-bold ml-2">Top Asset: {{ metrics.topAsset }}</span>
+        <span class="text-lg ml-auto">
+          {{ metrics.topAssetValue | currency:currencySelected.currencySelected.toUpperCase():'symbol-narrow':'1.2-2' }}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Empty State -->
+<div class="empty-portfolio-summary" *ngIf="newRowService.isEmpty">
+  <div class="hopium-card text-center">
+    <mat-icon class="large-icon text-muted">account_balance_wallet</mat-icon>
+    <h3 class="text-muted">No Portfolio Data</h3>
+    <p class="text-muted">Add some cryptocurrencies to see your portfolio summary!</p>
+  </div>
+</div>

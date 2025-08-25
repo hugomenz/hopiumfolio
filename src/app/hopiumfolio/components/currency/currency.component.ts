@@ -1,18 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ApiCoingeckoService } from '../../services/api-coingecko.service';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  filter,
-  map,
-  startWith,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
-
-import * as _ from 'lodash';
-
+import { Subject, takeUntil, startWith, map } from 'rxjs';
 import { CurrencySelectedService } from '../../services/currency-selected.service';
 import { NewRowService } from '../../services/new-row.service';
 import { forkJoin, Observable } from 'rxjs';
@@ -22,12 +11,11 @@ import { forkJoin, Observable } from 'rxjs';
   templateUrl: './currency.component.html',
   styleUrls: ['./currency.component.scss'],
 })
-export class CurrencyComponent implements OnInit {
+export class CurrencyComponent implements OnInit, OnDestroy {
   currencySelected = new FormControl('usd');
-
-  currency!: string;
-  currencyList!: string[];
-  filteredCurrency!: Observable<any[]>;
+  currencyList: string[] = [];
+  filteredCurrency!: Observable<string[]>;
+  private destroy$ = new Subject<void>();
 
   constructor(
     private _coinGecko: ApiCoingeckoService,
@@ -35,77 +23,85 @@ export class CurrencyComponent implements OnInit {
     private _newRowService: NewRowService
   ) {}
 
-  ngOnInit() {
-    this._coinGecko.getCurrencyList().subscribe((data) => {
-      //console.log(data);
-      this.currencyList = _.values(data);
-      this.filteredCurrency = this.currencySelected.valueChanges.pipe(
-        startWith(''),
-        map((curr) =>
-          curr ? this.filterCurrencyList(curr) : this.currencyList.slice()
-        )
-      );
-    });
+  ngOnInit(): void {
+    // Set initial value from service
+    this.currencySelected.setValue(this._currencySelected.currencySelected);
+
+    // Load currency list from API
+    this._coinGecko.getCurrencyList()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((data) => {
+        this.currencyList = Array.isArray(data) ? data : Object.values(data);
+        this.setupFilteredCurrency();
+      });
+
+    // Subscribe to currency selection changes
+    this.currencySelected.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((selectedCurrency) => {
+        if (selectedCurrency && selectedCurrency !== this._currencySelected.currencySelected) {
+          this._currencySelected.updateCurrency(selectedCurrency);
+          this.refreshPortfolioData();
+        }
+      });
+
+    // Subscribe to currency service changes
+    this._currencySelected.getCurrency()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((currency) => {
+        if (this.currencySelected.value !== currency) {
+          this.currencySelected.setValue(currency, { emitEvent: false });
+        }
+      });
   }
 
-  getCurrencyList() {}
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
-  filterCurrencyList(name: string) {
-    return this.currencyList.filter(
-      (curr) => curr.toLowerCase().indexOf(name.toLowerCase()) === 0
+  private setupFilteredCurrency(): void {
+    this.filteredCurrency = this.currencySelected.valueChanges.pipe(
+      startWith(''),
+      map((curr) => curr ? this.filterCurrencyList(curr) : this.currencyList.slice())
     );
   }
 
-  displayWith(value: string) {
-    if (value !== undefined) {
-      return value.toUpperCase();
-    } else {
-      return value;
+  filterCurrencyList(name: string): string[] {
+    const filterValue = name.toLowerCase();
+    return this.currencyList.filter(curr => 
+      curr.toLowerCase().includes(filterValue) ||
+      this._currencySelected.getCurrencyName(curr).toLowerCase().includes(filterValue)
+    );
+  }
+
+  displayWith(value: string): string {
+    if (value !== undefined && value !== null) {
+      return `${value.toUpperCase()} - ${this._currencySelected.getCurrencyName(value)}`;
+    }
+    return value;
+  }
+
+  getCurrencySymbol(currency: string): string {
+    return this._currencySelected.getCurrencySymbol(currency);
+  }
+
+  refreshPortfolioData(): void {
+    // Refresh portfolio data when currency changes
+    if (!this._newRowService.isEmpty && 
+        this._currencySelected.previousCurrency !== '' &&
+        this._currencySelected.previousCurrency !== this._currencySelected.currencySelected) {
+      
+      // Update all portfolio items with new currency
+      this._newRowService.refreshAllRowsWithNewCurrency();
     }
   }
 
-  refreshRow() {
-    // We refresh the table only if the conditions are met
-    // 1. tableRowList is NOT empty (there is at least one element in the table)
-    // 2. the previous currency is updated
-    // 3. previous and current currency must not match
-    if (
-      !this._newRowService.isEmpty &&
-      this._currencySelected.previousCurrency !== '' &&
-      this._currencySelected.previousCurrency !==
-        this._currencySelected.currencySelected
-    ) {
-      // get firstCoinID and secondCoinID from the row object
-      let firstCoinID = this._newRowService.tableRowList[0].cryptoFirst;
-      let secondCoinID = this._newRowService.tableRowList[0].cryptoSecond;
+  get currentCurrencySymbol(): string {
+    return this.getCurrencySymbol(this._currencySelected.currencySelected);
+  }
 
-      const requestFirstCoin = this._coinGecko.getCoinData(
-        this._currencySelected.currencySelected,
-        firstCoinID
-      );
-
-      const requestSecondCoin = this._coinGecko.getCoinData(
-        this._currencySelected.currencySelected,
-        secondCoinID
-      );
-
-      forkJoin([requestFirstCoin, requestSecondCoin]).subscribe((response) => {
-        let selectedFirstCryptoData = response[0][0];
-        let selectedSecondCryptoData = response[1][0];
-        if (selectedFirstCryptoData && selectedSecondCryptoData) {
-          this._newRowService.newRow({
-            firstCoin: selectedFirstCryptoData,
-            secondCoin: selectedSecondCryptoData,
-          });
-        }
-      });
-    }
-
-    // get array length too as rowInfoListLen
-    let rowInfoListLen = (<any>this._newRowService.tableRowList[0]).length;
-
-    // delete the first elements of the rowInfoList till the
-    // (rowInfoListLen - 1)
-    // table is updated
+  get currentCurrencyName(): string {
+    return this._currencySelected.getCurrencyName(this._currencySelected.currencySelected);
   }
 }

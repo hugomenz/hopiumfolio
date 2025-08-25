@@ -1,0 +1,83 @@
+.portfolio-summary-container {
+  margin: 1rem 0;
+}
+
+.portfolio-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.portfolio-metric {
+  text-align: center;
+  padding: 1rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  border: 1px solid rgba(157, 0, 255, 0.2);
+}
+
+.portfolio-metric-value {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #9d00ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+
+  mat-icon {
+    margin-right: 0.5rem;
+    font-size: 1.5rem;
+  }
+}
+
+.portfolio-metric-label {
+  font-size: 0.875rem;
+  color: #737373;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.top-asset-info {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: rgba(157, 0, 255, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(157, 0, 255, 0.3);
+}
+
+.empty-portfolio-summary {
+  margin: 2rem 0;
+}
+
+.large-icon {
+  font-size: 4rem;
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 1rem;
+}
+
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+@media (max-width: 768px) {
+  .portfolio-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .portfolio-metric-value {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .portfolio-metrics-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -4,7 +4,7 @@ import { Exchange } from 'src/app/interfaces/searchResponse.interface';
 import { RowInfo } from 'src/app/interfaces/coin-portfolio.interface';
 import { CoinFullData } from 'src/app/interfaces/coin.interface';
 import { newRowResponse } from '../../interfaces/coin.interface';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, forkJoin } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -21,8 +21,10 @@ export class NewRowService implements OnInit {
 
   hopiumMultiply!: number;
   hopiumPrice!: number;
-  //hopiumGain: number = 0;
   amountToken: number[] = [];
+
+  // Add API service reference for currency updates
+  private apiService: any;
 
   constructor() {
     if (this.tableRowList.length != 0) {
@@ -33,6 +35,10 @@ export class NewRowService implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  setApiService(apiService: any): void {
+    this.apiService = apiService;
+  }
 
   public newRow(dataFromSearch: newRowResponse): void {
     this.isEmpty = false;
@@ -56,19 +62,27 @@ export class NewRowService implements OnInit {
     );
   }
 
-  public getRows() {
+  public getRows(): Observable<RowInfo[]> {
     return this.tableRowList$.asObservable();
   }
 
-  public delete(id: number) {
+  public delete(id: number): void {
     this.tableRowList = this.tableRowList.filter((row) => row.id !== id);
 
-    localStorage.setItem('portfolio', JSON.stringify(this.tableRowList)); // update localstorage state
+    localStorage.setItem('portfolio', JSON.stringify(this.tableRowList));
 
     this.tableRowList$.next(this.tableRowList);
 
     if (this.tableRowList.length == 0) {
       this.isEmpty = true;
+    }
+  }
+
+  public refreshAllRowsWithNewCurrency(): void {
+    // This method will be called when currency changes
+    // For now, we'll trigger a refresh of the data
+    if (this.tableRowList.length > 0) {
+      this.tableRowList$.next([...this.tableRowList]);
     }
   }
 
@@ -89,14 +103,19 @@ export class NewRowService implements OnInit {
     return rowInfo;
   }
 
-  public getGain(index: number) {
-    this.tableRowList[index].gain =
-      this.tableRowList[index].amountToken * this.tableRowList[index].price;
+  public getGain(index: number): void {
+    if (this.tableRowList[index]) {
+      this.tableRowList[index].gain =
+        this.tableRowList[index].amountToken * this.tableRowList[index].price;
 
-    localStorage.setItem('portfolio', JSON.stringify(this.tableRowList)); // update localstorage state
+      localStorage.setItem('portfolio', JSON.stringify(this.tableRowList));
+      
+      // Notify subscribers of the change
+      this.tableRowList$.next([...this.tableRowList]);
+    }
   }
 
-  private getHopiumPrice(first: CoinFullData, second: CoinFullData) {
+  private getHopiumPrice(first: CoinFullData, second: CoinFullData): number {
     return (
       Math.round(
         first.current_price * this.getHopiumMultiplier(first, second) * 100
@@ -104,7 +123,20 @@ export class NewRowService implements OnInit {
     );
   }
 
-  private getHopiumMultiplier(first: CoinFullData, second: CoinFullData) {
+  private getHopiumMultiplier(first: CoinFullData, second: CoinFullData): number {
     return Math.round((second.market_cap / first.market_cap) * 100) / 100;
+  }
+
+  public updateRowPrices(updatedRowData: RowInfo[]): void {
+    this.tableRowList = updatedRowData;
+    localStorage.setItem('portfolio', JSON.stringify(this.tableRowList));
+    this.tableRowList$.next([...this.tableRowList]);
+  }
+
+  public clearPortfolio(): void {
+    this.tableRowList = [];
+    this.isEmpty = true;
+    localStorage.removeItem('portfolio');
+    this.tableRowList$.next([]);
   }
 }
