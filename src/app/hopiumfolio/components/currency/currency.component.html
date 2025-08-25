@@ -1,23 +1,35 @@
-<form class="example-form">
-  <mat-form-field class="crypto-field example-full-width" appearance="fill">
-    <mat-label>Selected Coin</mat-label>
-    <input
-      type="text"
-      placeholder="Pick one"
-      aria-label="Number"
-      matInput
-      [formControl]="currencySelected"
-      [matAutocomplete]="auto"
-      [(ngModel)]="currency"
-      (blur)="_currencySelected.updateCurrency(currency)"
-    />
-    <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayWith">
-      <mat-option
-        *ngFor="let currency of filteredCurrency | async"
-        [value]="currency"
-      >
-        {{ currency.toUpperCase() }}
-      </mat-option>
-    </mat-autocomplete>
-  </mat-form-field>
-</form>
+<div class="currency-selector">
+  <form class="currency-form">
+    <mat-form-field class="currency-field" appearance="fill">
+      <mat-label>Currency</mat-label>
+      <mat-icon matPrefix>attach_money</mat-icon>
+      <input
+        type="text"
+        placeholder="Select currency"
+        aria-label="Currency"
+        matInput
+        [formControl]="currencySelected"
+        [matAutocomplete]="auto"
+      />
+      <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayWith">
+        <mat-option
+          *ngFor="let currency of filteredCurrency | async"
+          [value]="currency"
+        >
+          <span class="currency-option">
+            <strong>{{ currency.toUpperCase() }}</strong>
+            <span class="currency-symbol">{{ getCurrencySymbol(currency) }}</span>
+            <small>{{ _currencySelected.getCurrencyName(currency) }}</small>
+          </span>
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+  
+  <!-- Current currency display -->
+  <div class="current-currency" *ngIf="_currencySelected.currencySelected">
+    <span class="currency-display">
+      {{ currentCurrencySymbol }} {{ _currencySelected.currencySelected.toUpperCase() }}
+    </span>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="theme-toggle-container">
+  <button 
+    mat-icon-button 
+    class="theme-toggle-btn"
+    (click)="toggleTheme()"
+    [attr.aria-label]="themeLabel"
+    [title]="themeLabel"
+  >
+    <mat-icon>{{ themeIcon }}</mat-icon>
+  </button>
+  <span class="theme-label">{{ isDarkTheme ? 'Dark' : 'Light' }}</span>
+</div>

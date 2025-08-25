@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PortfolioDataService } from '../../services/portfolio-data.service';
+import { NewRowService } from '../../services/new-row.service';
 
 @Component({
   selector: 'app-portfolio',
@@ -7,15 +8,15 @@ import { PortfolioDataService } from '../../services/portfolio-data.service';
   styleUrls: ['./portfolio.component.scss'],
 })
 export class PortfolioComponent implements OnInit {
-  constructor(public _portfolioData: PortfolioDataService) {}
+  constructor(
+    public _portfolioData: PortfolioDataService,
+    public _newRowService: NewRowService
+  ) {}
 
   ngOnInit(): void {
-    /*   this._portfolioData.chartDataList = [
-      { name: 'ADA', value: 32 },
-      { name: 'COTI', value: 16 },
-      { name: 'WMT', value: 15 },
-      { name: 'BTC', value: 21 },
-      { name: 'ERG', value: 12 },
-    ]; */
+    // Update chart data when component loads
+    if (!this._newRowService.isEmpty) {
+      this._portfolioData.updateChartData(this._newRowService.tableRowList);
+    }
   }
 }
